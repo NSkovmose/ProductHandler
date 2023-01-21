@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ProductHandler.Models.ProductModel>
+
+@{
+    ViewData["Title"] = "Produkt liste";
+
+}
+
+<h1>Produkt liste</h1>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Søg: @Html.TextBox("SearchTerm")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.Id), "Index", new {page = 1, sortOrder = ViewBag.IdSort, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.Name), "Index", new {page = 1, sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.ActionLink(Html.DisplayNameFor(model => model.CreatedDate), "Index", new {page = 1, sortOrder = ViewBag.DateSort, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductModel item in ViewBag.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Ret</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Slet</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.PagedListPager( (IPagedList)ViewBag.Products, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions { LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] { "page-link" }} )
