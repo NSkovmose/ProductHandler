@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nrdTLmYsZE7bQC6guuKS5g+UwwTausl5JIMZfSqhGVZJ9+txuW/+tG6LcIBEMTT7xLiUIH2Crb0qjN9o3IsZ2g==",
+  "dgSpecHash": "sdkaiQ1ohfzzpsUoQnNeQ4I5aezQmnfmrELjyRsQNHKjxjxsuZBRGff64HiFvl20tV9TgquV3Syt4JnFWc5M1w==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\ProductHandler\\ProductHandler.csproj",
+  "projectFilePath": "D:\\Projects\\Git\\ProductHandler\\ProductHandler\\ProductHandler.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Skovmose\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Skovmose\\.nuget\\packages\\jetbrains.annotations\\2022.1.0\\jetbrains.annotations.2022.1.0.nupkg.sha512",

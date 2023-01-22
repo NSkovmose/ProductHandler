@@ -10114,11 +10114,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\ProductHandler\\ProductHandler.csproj",
+      "projectUniqueName": "D:\\Projects\\Git\\ProductHandler\\ProductHandler\\ProductHandler.csproj",
       "projectName": "ProductHandler",
-      "projectPath": "D:\\Projects\\ProductHandler\\ProductHandler.csproj",
+      "projectPath": "D:\\Projects\\Git\\ProductHandler\\ProductHandler\\ProductHandler.csproj",
       "packagesPath": "C:\\Users\\Skovmose\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\ProductHandler\\obj\\",
+      "outputPath": "D:\\Projects\\Git\\ProductHandler\\ProductHandler\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Skovmose\\AppData\\Roaming\\NuGet\\NuGet.Config",
