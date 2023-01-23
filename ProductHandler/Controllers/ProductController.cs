@@ -20,6 +20,7 @@ namespace ProductHandler.Controllers
 
         public async Task<IActionResult> Index(string sortOrder, string searchTerm, string currentFilter, int? page)
         {
+            //Ekstern metode til sortering og filtrering, hent kun produkter første gang man tilgår index
             var products = await _productService.GetAllProducts();
 
             int pageSize = 10;
