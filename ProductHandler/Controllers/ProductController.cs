@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using ProductHandler.Data;
 using ProductHandler.Models;
 using ProductHandler.Services;
 using X.PagedList;
@@ -12,17 +9,44 @@ namespace ProductHandler.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private static List<ProductModel> products;
 
         public ProductController(IProductService productService)
         {
             _productService = productService;
         }
 
-        public async Task<IActionResult> Index(string sortOrder, string searchTerm, string currentFilter, int? page)
+        public async Task<IActionResult> Index()
         {
-            //Ekstern metode til sortering og filtrering, hent kun produkter første gang man tilgår index
+            products = await _productService.GetAllProducts();
+
+            int pageSize = 10;
+            int pageNumber = 1;
+            var sortOrder = "";
+
+            ViewBag.Products = products.OrderByDescending(x => x.Id).ToPagedList(pageNumber, pageSize);
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.IdSort = string.IsNullOrEmpty(sortOrder) ? "id_asc" : "";
+            ViewBag.NameSort = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+            ViewBag.DateSort = sortOrder == "date_asc" ? "date_desc" : "date_asc";
+
+            return View();
+        }
+
+        public async Task<IActionResult> DataTableIndex(string searchTerm)
+        {
             var products = await _productService.GetAllProducts();
 
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                products = products.Where(x => x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm)).ToList();
+            }
+
+            return View(products);
+        }
+        public PartialViewResult SortAndFilterTable(string sortOrder, string searchTerm, string currentFilter, int? page)
+        {
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
@@ -69,19 +93,7 @@ namespace ProductHandler.Controllers
             ViewBag.NameSort = sortOrder == "name_asc" ? "name_desc" : "name_asc";
             ViewBag.DateSort = sortOrder == "date_asc" ? "date_desc" : "date_asc";
 
-            return View();
-        }
-
-        public async Task<IActionResult> DataTableIndex(string searchTerm)
-        {
-            var products = await _productService.GetAllProducts();
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                products = products.Where(x => x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm)).ToList();
-            }
-
-            return View(products);
+            return PartialView("TablePartial");
         }
 
         public async Task<IActionResult> Details(int? id)

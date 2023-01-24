@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ProductHandler.Models.ProductModel>
+
+<input type="hidden" value="@ViewBag.CurrentFilter" />
+<input type="hidden" value="@ViewBag.CurrentSort" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a id="sortTable" data-sort="@ViewBag.IdSort">@Html.DisplayNameFor(model => model.Id)</a>
+            </th>
+            <th>
+                <a id="sortTable" data-sort="@ViewBag.NameSort">@Html.DisplayNameFor(model => model.Name)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                <a id="sortTable" data-sort="@ViewBag.DateSort">@Html.DisplayNameFor(model => model.CreatedDate)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductModel item in ViewBag.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Ret</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Slet</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.PagedListPager((IPagedList)ViewBag.Products, page => Url.Action("SortAndFilterTable", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions { LiElementClasses = new List<string> { "page-item" }, PageClasses = new List<string> { "page-link" }, UlElementClasses = new List<string> { "pagination justify-content-center" }, DisplayLinkToPreviousPage = PagedListDisplayMode.Never, DisplayLinkToNextPage = PagedListDisplayMode.Never }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "tableContainer" }))
