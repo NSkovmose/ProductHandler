@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProductHandler.Models;
 using ProductHandler.Services;
+using System.Drawing.Printing;
 using X.PagedList;
 
 namespace ProductHandler.Controllers
@@ -20,12 +21,9 @@ namespace ProductHandler.Controllers
         {
             products = await _productService.GetAllProducts();
 
-            int pageSize = 10;
-            int pageNumber = 1;
             var sortOrder = "";
 
-            ViewBag.Products = products.OrderByDescending(x => x.Id).ToPagedList(pageNumber, pageSize);
-            ViewBag.PageNumber = pageNumber;
+            ViewBag.Products = products.OrderByDescending(x => x.Id).ToPagedList(1, 10);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.IdSort = string.IsNullOrEmpty(sortOrder) ? "id_asc" : "";
             ViewBag.NameSort = sortOrder == "name_asc" ? "name_desc" : "name_asc";
@@ -44,6 +42,20 @@ namespace ProductHandler.Controllers
             }
 
             return View(products);
+        }
+
+        public async Task<PartialViewResult> SearchProducts(string searchTerm)
+        {
+            products = await _productService.GetAllProducts();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                products = products.Where(x => x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm)).ToList();
+            }
+
+            ViewBag.Products = products.ToPagedList(1, 10);
+
+            return PartialView("TablePartial");
         }
         public PartialViewResult SortAndFilterTable(string sortOrder, string searchTerm, string currentFilter, int? page)
         {

@@ -12,7 +12,7 @@
 
 <h1>Produkt liste</h1>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("SearchProducts", "Product", FormMethod.Post, new {id = "searchForm"}))
 {
     <p>
         Søg: @Html.TextBox("SearchTerm")

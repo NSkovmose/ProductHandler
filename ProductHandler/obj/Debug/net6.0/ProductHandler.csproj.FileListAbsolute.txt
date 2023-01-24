@@ -546,3 +546,4 @@ D:\Projects\Git\ProductHandler\ProductHandler\obj\Debug\net6.0\refint\ProductHan
 D:\Projects\Git\ProductHandler\ProductHandler\obj\Debug\net6.0\ProductHandler.pdb
 D:\Projects\Git\ProductHandler\ProductHandler\obj\Debug\net6.0\ProductHandler.genruntimeconfig.cache
 D:\Projects\Git\ProductHandler\ProductHandler\obj\Debug\net6.0\ref\ProductHandler.dll
+D:\Projects\Git\ProductHandler\ProductHandler\bin\Debug\net6.0\web.config
